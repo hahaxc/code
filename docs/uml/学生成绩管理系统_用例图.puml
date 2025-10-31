@@ -1,0 +1,39 @@
+@startuml
+left to right direction
+skinparam actorStyle awesome
+skinparam usecase {
+  BackgroundColor White
+  BorderColor #2f2f2f
+}
+
+actor "教务管理人员" as Admin
+actor "教师" as Teacher
+actor "学生" as Student
+
+usecase "登录系统" as UC_Login
+usecase "教师、学生名单管理" as UC_ListMgmt
+usecase "学期教学计划管理" as UC_TermPlan
+usecase "成绩管理" as UC_GradeMgmt
+usecase "课程分配" as UC_CourseAssign
+usecase "打印任课通知书" as UC_PrintNotice
+usecase "选课" as UC_SelectCourse
+usecase "生成成绩单" as UC_Report
+
+' 参与者与用例关联
+Admin -- UC_Login
+Admin -- UC_ListMgmt
+Admin -- UC_TermPlan
+Admin -- UC_GradeMgmt
+Admin -- UC_CourseAssign
+
+Teacher -- UC_Login
+Teacher -- UC_GradeMgmt
+
+Student -- UC_Login
+Student -- UC_SelectCourse
+
+' 用例之间关系
+UC_CourseAssign --> UC_PrintNotice : <<include>>\n每次必须打印
+UC_GradeMgmt ..> UC_Report : <<extend>>\n教师可选择生成
+
+@enduml
